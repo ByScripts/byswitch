@@ -1,0 +1,90 @@
+// BASE
+.byswitch-container {
+    display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
+    font-family: arial, sans-serif;
+    text-transform: uppercase;
+    box-shadow: -1px -1px 0 rgba(0,0,0,0.2),  1px 1px 0 rgba(255,255,255,0.2);
+    input {
+        display: none;
+    }
+    .byswitch-block {
+        display: table;
+        height: 100%;
+        position: relative;
+        left: 0;
+    }
+    .byswitch-off, .byswitch-on, .byswitch-handle {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        box-sizing: border-box;
+        position: relative;
+    }
+    .byswitch-off, .byswitch-on {
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+    .byswitch-off {
+        text-shadow: 1px 1px 1px rgba(255,255,255,0.4);
+        z-index: 1;
+    }
+    .byswitch-handle {
+        z-index: 3;
+        box-shadow: 0 0 40px rgba(0,0,0,0.4), inset 1px 1px 0 rgba(255, 255, 255, 0.2), inset -1px -1px 0 rgba(0, 0, 0, 0.2);
+        &:before {
+            content: "|||";
+            color: #888;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.3);
+        }
+    }
+    .byswitch-on {
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+        z-index: 0;
+    }
+    input:checked + .byswitch-block .byswitch-on {
+        z-index: 2;
+    }
+}
+
+// MIXIN
+.byswitch(@class-name, @width: 130px, @height: 20px, @duration: 0.2s, @handle-width: @width * 0.15, @handle-bg-color: #ccc, @off-bg-color: #ccc, @off-text-color: #777, @on-bg-color: #5cb85c, @on-text-color: white, @border-radius: min(@handle-width, @height) / 2, @font-size: @height/2) {
+    .byswitch-container.byswitch-@{class-name} {
+        width: @width;
+        height: @height;
+        border-radius: @border-radius;
+        font-size: @font-size;
+        
+        .byswitch-block {
+            width: @width * 2 + @handle-width;
+            transition: @duration left;
+        }
+        input:checked + .byswitch-block {
+                left: @handle-width - @width;
+            }
+        .byswitch-off, .byswitch-on, .byswitch-handle {
+            border-radius: @border-radius;
+        }
+        .byswitch-off, .byswitch-on {
+            width: @width;
+        }
+        .byswitch-off {
+            background-color: @off-bg-color;
+            color: @off-text-color;
+            padding: 2px @handle-width 0 (@border-radius / 2);
+        }
+        .byswitch-handle {
+            width: @handle-width;
+            left: -@handle-width;
+            background-color: @handle-bg-color;
+        }
+        .byswitch-on {
+            left: -@handle-width*2;
+            background-color: @on-bg-color;
+            color: @on-text-color;
+            padding: 2px (@border-radius / 2) 0 @handle-width;
+        }
+    }
+}
+
+.byswitch(default);

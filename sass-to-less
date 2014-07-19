@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+rm byswitch.less
+cp byswitch.scss byswitch.less
+sed -i 's/#{\$\([^}]\+\)}/@{\1}/g' byswitch.less
+sed -i 's/@mixin\s\+/./g' byswitch.less
+sed -i 's/@include\s\+/./g' byswitch.less
+sed -i 's/\$/@/g' byswitch.less
